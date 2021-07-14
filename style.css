@@ -1,0 +1,145 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background-color: #181818;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+ 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover, button:hover { cursor: pointer; }
+
+h1, h2, h3, h4, h5, h6, button, p, input{
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 200;
+}
+
+span { 
+  opacity: 0.9;
+  display: block; 
+}
+
+input { width: 50em; }
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 2%;
+}
+
+nav {
+  display: flex;
+  margin-right: 2%;
+}
+
+.nav-btn {
+  background-color: #181818;
+  color: #ffffff;
+  border: none;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  transition-duration: 0.1s;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin: auto;
+  flex-grow: 1;
+}
+
+.desc {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+footer {
+  text-align: center;
+  margin: auto;
+}
+
+/* DISCOVER.HTML */
+
+.btn, #search-bar{
+  background-color: #181818;
+  color: #ffffff;
+  border: solid 1px #ffffff;
+  border-radius: 7px;
+  transition-duration: 0.1s;
+}
+
+.tag, #clear-tags-btn, #search-bar, #search-btn, #random-game-btn, #show-all-tags-btn{
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 5px;
+}
+
+.tag-span {
+  display: inline;
+  margin: 0;
+}
+
+.disabled { 
+  opacity: 0.6; 
+  pointer-events: none;
+}
+
+.game-btn, .game-anchor{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 50em;
+}
+
+.game-btn { margin: 10px; }
+
+.game-anchor { 
+  cursor: default;
+  margin: 0; 
+}
+
+.game-anchor:hover { cursor: default; }
+
+@media (hover: hover) {
+  .btn:hover {
+    background-color: #ffffff;
+    color: #181818;
+    border-color: #181818;
+    font-weight: 600;
+  }
+  .nav-btn:hover { border-bottom: solid 1px #ffffff;}
+}
+
+#discover-page { justify-content: flex-start; }
+
+.tags-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#tags-included-counter {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#game-contianer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

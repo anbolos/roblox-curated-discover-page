@@ -24,19 +24,19 @@
     <div class="content" id="discover-page">
       <h2>To find a game, search for a keyword or click any of the tags below to start!</h2>
       <div class="search">
-        <input id="search-bar" onkeypress="onKeyPressSearch(event)"></input>
+        <input id="search-bar" class="padding" onkeypress="onKeyPressSearch(event)"></input>
       </div>
       <div class="search-btn-container">
-        <button id="search-btn" class="btn" onclick="onClickSearch()">Search</button>
-        <button id="random-game-btn" class="btn"><a href="" target="_blank" onclick="getRandomGame()" id="random-game-anchor">Feeling Lucky?</a></button>
+        <button id="search-btn" class="btn padding" onclick="onClickSearch()">Search</button>
+        <button id="random-game-btn" class="btn padding"><a href="" target="_blank" onclick="getRandomGame()" id="random-game-anchor">Feeling Lucky?</a></button>
       </div>
       <div class="tags-heading">
         <h2 id="tags-header">Tags</h2>
         <p id="tags-included-counter"></p>
-        <button id="clear-tags-btn" class="btn" onclick="clearTags()">Clear Tags</button>
+        <button id="clear-tags-btn" class="btn padding" onclick="clearTags()">Clear Tags</button>
       </div>
       <div>
-        <button id="show-all-tags-btn" class="btn" onclick="toggleAllTagsWithNoGames()">Show All Tags With No Games</button>
+        <button id="show-all-tags-btn" class="btn padding" onclick="toggleAllTagsWithNoGames()">Show Tags With No Games</button>
       </div>
       <div id="tags">
       </div>
@@ -49,7 +49,7 @@
       <h5>The Roblox Curated Discover Page is not in any way affiliated with the Roblox Corporation.</h5>
       <h5>Made in 2021 by <a href="https://www.roblox.com/users/53117021/profile" target="_blank">Anquilis</a></h5>
     </footer>
-    <script src="/scripts/main.js"></script>
     <script src="/scripts/data.js"></script>
+    <script src="/scripts/main.js"></script>
   </body>
 </html>

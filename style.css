@@ -82,7 +82,7 @@ footer {
   transition-duration: 0.1s;
 }
 
-.tag, #clear-tags-btn, #search-bar, #search-btn, #random-game-btn, #show-all-tags-btn{
+.tag, .padding{
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
@@ -114,6 +114,8 @@ footer {
 }
 
 .game-anchor:hover { cursor: default; }
+
+.game-tag-span { padding-top: 5px; }
 
 @media (hover: hover) {
   .btn:hover {

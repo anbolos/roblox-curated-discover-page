@@ -1,8 +1,7 @@
 /* CONSTANTS */
 
 /* WEBSITE INFORMATION CONSTANTS */
-const DATE_GAMES_ADDED = new Date(2021,6,11);
-const GAMES_ADDED_RECENTLY = 4;
+const DATE_GAMES_ADDED = new Date(2021,6,18);
 const DATE_OF_CREATION = new Date(2021,6,9);
 const DATE = new Date();
 const ROBLOX_MADE_ANNOUNCEMENT = false;
@@ -20,8 +19,6 @@ const GAME_URL = "https://www.roblox.com/games/";
 // Tag buttons holds a tag objects's information
 
 const TAGS = [];
-const TAG_NAMES = ["Adventure","Building","Comedy","Fighting","FPS","Horror","Medieval","Military","Naval","RPG","Sci-Fi","Sports","Town and City","Western","Simulator","Obby","Tycoon","Anime","Racing","Single-Player","Showcase","Survival","Third-Person Shooter","Story","Space","Simulation","Low-poly","Mixed Art Style","Realistic","Retro","Round-based","Mystery","Nature","Underwater","Battle-Royale","Tower Defense","Fashion","Cart-Riding","Rap Battle","Family","Pets","Hangout","Fantasy","Roleplay","Swordfighting","Something Different","Zombie","Random Events","Food","Skateboarding","Prison","Monster-Collecting","Murder","Group Game","Marble Run","Speed Run","Ragdoll","Paid-Access","Rhythm","Dungeon","Soccer","Football","Boxing","Fast-Food","Cafe","Minigames","Spy","Martial Arts","Vehicles","Forest","Shooter","Camping","Hiking","Gear","Recently Added","Hostpital","Beach","Difficulty-Chart","Puzzle","Recently Released","Hide and Seek"];
-TAG_NAMES.sort();
 
 /* HTML ELEMENT CLASS CONSTANTS */
 
@@ -37,12 +34,21 @@ let numOfGames = 0;
 
 /* GAME CREATION FUNCTIONS */
 
+function developerNotInGames(developer) {
+  for (let i = 0; i < GAMES.length; i++) {
+    if (GAMES[i].developer === developer) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function verifyTags(tags) {
   if (tags.length === 0) { throw "Tags is an empty array"; }
   tags.forEach(function(tag){
     if (typeof(tag) !== "string") { throw "Tag '" + tag + "' is not a string"; }
     if (tag.length === 0) { throw "Tag is an empty string"; } 
-    if (!TAG_NAMES.includes(tag)) { throw "Tag '" + tag + "' is not defined in TAG_NAMES"; } 
+    if (!TAG_DATA.includes(tag)) { throw "Tag '" + tag + "' is not defined in TAG_DATA"; } 
   });
 }
 
@@ -50,6 +56,7 @@ function catchErrors(title,developer,gameId,tags) {
   try {
     if (typeof(title) !== "string") { throw "Title '" + title + "' should be defined as a string"; }
     if (typeof(developer) !== "string") { throw "Developer '" + developer + "' should be defined as a string"; }
+    if (!developerNotInGames(developer)) { throw "Developer '" + developer + "' already has a game in GAME_DATA"; }
     if (typeof(gameId) !== "string" ) { throw "GameId '" + gameId + "' should be defined as a string"; }
     if (parseFloat(gameId).toString().length !== gameId.length) { throw "GameId '" + gameId + "' is invalid"; }
     if (typeof(tags) !== "object") { throw "Tags is not an array"; }
@@ -62,7 +69,12 @@ function catchErrors(title,developer,gameId,tags) {
   return false;
 }
 
-function createGame(title,developer,gameId,tags) {
+function createGame(array) {
+  let title = array[0];
+  let developer = array[1];
+  let gameId = array[2];
+  let tags = array[3];
+
   if (catchErrors(title,developer,gameId,tags)) { return; }
   const game = {
     title: title,
@@ -112,6 +124,20 @@ function getTag(tagId) {
   return TAGS[tagId];
 }
 
+/* GAME CREATION */
+
+for (let i = 0; i < GAME_DATA.length; i++) {
+  createGame(GAME_DATA[i]);
+}
+
+/* TAG CREATION */
+
+// Note: Tags are created after games because they need the number of games with their tag
+
+for (let i = 0; i < TAG_DATA.length; i++) {
+  createTag(TAG_DATA[i],i);
+}
+
 /* WEBSITE INFORMATION FUNCTIONS */
 
 function showNumOfGames() {
@@ -128,7 +154,7 @@ function showRecentlyAddedGames() {
   let day = DATE_GAMES_ADDED.getUTCDate();
   let year = DATE_GAMES_ADDED.getUTCFullYear();
   let date =  month + "/" + day + "/" + year;
-  document.getElementById("recently-added").textContent = "As of " + date + ", " + GAMES_ADDED_RECENTLY + " games were added to the RCDP.";
+  document.getElementById("recently-added").textContent = "As of " + date + ", " + getGamesWithTag("Recently Added") + " games were added to the RCDP.";
 }
 
 function calculateDaysBetweenNowAndCreation() {
@@ -277,22 +303,31 @@ function createGameButton(game) {
 
   let button = document.createElement("button");
   button.className = "btn game-btn";
-  button.textContent = game.title + " by " + game.developer;
 
-  let span = document.createElement("span");
-  span.className = "game-span"
+  let gameSpan = document.createElement("span");
+  gameSpan.className = "game-span";
+  gameSpan.textContent = game.title + " by " + game.developer;
+
+  let gameTagSpan = document.createElement("span");
+  gameTagSpan.className = "game-tag-span";
   let tags = "Tags: ";
+  // gameTagSpan.textContent = tags;
   for (let i = 0; i < game.tags.length; i++) {
+    // let span = document.createElement("span");
+    // span.className = "game-tag";
+    // span.textContent = game.tags[i];
+    // gameTagSpan.appendChild(span);
     if (i === game.tags.length - 1) {
       tags += game.tags[i];
     } else {
       tags += game.tags[i] + ", ";
     }
   }
-  span.textContent = tags;
+  gameTagSpan.textContent = tags;
 
   a.appendChild(button);
-  button.appendChild(span);
+  button.appendChild(gameSpan)
+  button.appendChild(gameTagSpan);
   document.getElementById("game-container").appendChild(a);
   return a;
 }

@@ -74,7 +74,7 @@ function createGame(array) {
   let developer = array[1];
   let gameId = array[2];
   let tags = array[3];
-
+  tags.push("All Games");
   if (catchErrors(title,developer,gameId,tags)) { return; }
   const game = {
     title: title,
@@ -234,10 +234,10 @@ function toggleAllTagsWithNoGames(btn) {
   let showAllTagsButton = document.getElementById("show-all-tags-btn")
  tagsWithNoGames.forEach(function(tag) {
     if (tag.style.display === "none") {
-      showAllTagsButton.textContent = "Hide All Tags With No Games";
+      showAllTagsButton.textContent = "Hide Tags With No Games";
       tag.style.display = "";
     } else {
-      showAllTagsButton.textContent = "Show All Tags With No Games";
+      showAllTagsButton.textContent = "Show Tags With No Games";
       tag.style.display = "none";
     }
   });
@@ -317,6 +317,7 @@ function createGameButton(game) {
     // span.className = "game-tag";
     // span.textContent = game.tags[i];
     // gameTagSpan.appendChild(span);
+    if (game.tags[i] === "All Games") { continue; }
     if (i === game.tags.length - 1) {
       tags += game.tags[i];
     } else {

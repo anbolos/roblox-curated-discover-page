@@ -115,6 +115,7 @@ footer {
 
 .game-anchor:hover { cursor: default; }
 
+.game-span { opacity: 1; }
 .game-tag-span { padding-top: 5px; }
 
 @media (hover: hover) {

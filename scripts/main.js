@@ -24,6 +24,7 @@ const TAGS = [];
 
 const TAG_CLASS_NAMES = "btn tag";
 const DISABLED_TAG = "disabled";
+const HIDE_TAG = "hide";
 
 /* VARIABLES */
 
@@ -229,16 +230,28 @@ function clearTags() {
   findGames();
 }
 
-function toggleAllTagsWithNoGames(btn) {
+function toggleTagsWithNoGames() {
   let tagsWithNoGames = Array.from(document.getElementsByClassName(DISABLED_TAG));
-  let showAllTagsButton = document.getElementById("show-all-tags-btn")
+  let showTagsNoGamesButton = document.getElementById("show-tags-no-games-btn");
  tagsWithNoGames.forEach(function(tag) {
     if (tag.style.display === "none") {
-      showAllTagsButton.textContent = "Hide Tags With No Games";
+      showTagsNoGamesButton.textContent = "Hide Tags With No Games";
       tag.style.display = "";
     } else {
-      showAllTagsButton.textContent = "Show Tags With No Games";
+      showTagsNoGamesButton.textContent = "Show Tags With No Games";
       tag.style.display = "none";
+    }
+  });
+}
+
+function toggleAllTags() {
+  let tags = Array.from(document.getElementsByClassName("tag"));
+  let showTagsButton = document.getElementById("show-tags-btn");
+  tags.forEach(function(tag){
+    if (tag.style.display === "") {        
+      tag.style.display = "none";
+    } else {
+      tag.style.display = "";
     }
   });
 }

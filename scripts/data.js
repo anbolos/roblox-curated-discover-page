@@ -14,7 +14,7 @@ let GAME_DATA = [
   ["Trucking Tycoon Remastered","Excelevate Studios","7069619899",["Tycoon","Town and City","Vehicles","Recently Added"]],
   ["Large Rock","TimesNine","7074874177",["Showcase","Forest","Hiking","Recently Added"]],
   ["Gunner Games","Y35X","6046833625",["Fighting","Round-Based","Shooter","Recently Added"]],
-  ["Repeat Trespassing","Demonic_Anxiety","4573804999",["Horror","Adventure","School","Recently Added"]],
+  ["Repeat Trespassing","Demonic_Anxiety","4573804999",["Horror","Adventure","Story","Recently Added"]],
   ["Super Hard Obby","NetGames","5111058067",["Adventure","Speed Run","Difficult","Recently Added"]],
   ["Meme Space","IBuildXP","6076671230",["Adventure","Comedy","Space","Recently Added"]]
 ]

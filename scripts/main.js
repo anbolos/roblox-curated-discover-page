@@ -1,7 +1,7 @@
 /* CONSTANTS */
 
 /* WEBSITE INFORMATION CONSTANTS */
-const DATE_GAMES_ADDED = new Date(2021,6,18);
+const DATE_GAMES_ADDED = new Date(2021,6,31);
 const DATE_OF_CREATION = new Date(2021,6,9);
 const DATE = new Date();
 const ROBLOX_MADE_ANNOUNCEMENT = false;
@@ -32,6 +32,7 @@ let gamesFound = [];
 let tagsIncluded = [];
 let keywords = [];
 let numOfGames = 0;
+let numOfRecentlyAddedGames = 0;
 
 /* GAME CREATION FUNCTIONS */
 
@@ -53,7 +54,7 @@ function verifyTags(tags) {
   });
 }
 
-function catchErrors(title,developer,gameId,tags) {
+function catchErrors(title,developer,gameId,tags,recentlyAdded) {
   try {
     if (typeof(title) !== "string") { throw "Title '" + title + "' should be defined as a string"; }
     if (typeof(developer) !== "string") { throw "Developer '" + developer + "' should be defined as a string"; }
@@ -61,6 +62,7 @@ function catchErrors(title,developer,gameId,tags) {
     if (typeof(gameId) !== "string" ) { throw "GameId '" + gameId + "' should be defined as a string"; }
     if (parseFloat(gameId).toString().length !== gameId.length) { throw "GameId '" + gameId + "' is invalid"; }
     if (typeof(tags) !== "object") { throw "Tags is not an array"; }
+    if (typeof(recentlyAdded) !== "boolean" ) { throw "Recently Added should be defined as a boolean"; }
     verifyTags(tags);
   } 
   catch (err) {
@@ -75,16 +77,19 @@ function createGame(array) {
   let developer = array[1];
   let gameId = array[2];
   let tags = array[3];
-  tags.push("All Games");
-  if (catchErrors(title,developer,gameId,tags)) { return; }
+  let recentlyAdded = array[4];
+  if (catchErrors(title,developer,gameId,tags,recentlyAdded)) { return; }
+  if (recentlyAdded) { numOfRecentlyAddedGames++ };
   const game = {
     title: title,
     developer: developer,
     link: GAME_URL + gameId,
-    tags: tags.sort() // Stores tag names, not tag objects
+    tags: tags.sort(), // Stores tag names, not tag objects
+    recentlyAdded: recentlyAdded,
   }
   numOfGames++;
   GAMES.push(game);
+  tags.push("All Games");
 }
 
 // https://www.w3docs.com/snippets/javascript/how-to-randomize-shuffle-a-javascript-array.html
@@ -106,6 +111,9 @@ function getGamesWithTag(tag) {
   let gamesWithTag = 0;
   GAMES.forEach(function(game){
     if (game.tags.includes(tag)) {
+      gamesWithTag++;
+    }
+    if (game.recentlyAdded && tag === "Recently Added") {
       gamesWithTag++;
     }
   });
@@ -155,7 +163,7 @@ function showRecentlyAddedGames() {
   let day = DATE_GAMES_ADDED.getUTCDate();
   let year = DATE_GAMES_ADDED.getUTCFullYear();
   let date =  month + "/" + day + "/" + year;
-  document.getElementById("recently-added").textContent = "As of " + date + ", " + getGamesWithTag("Recently Added") + " games were added to the RCDP.";
+  document.getElementById("recently-added").textContent = "As of " + date + ", " + numOfRecentlyAddedGames + " games were added to the RCDP.";
 }
 
 function calculateDaysBetweenNowAndCreation() {
@@ -269,16 +277,6 @@ function getTagsIncluded() {
   return tagsIncluded;
 }
 
-function tagIncludedInGame(tag) {
-  let included = false;
-  GAMES.forEach(function(game){
-    if (game.tags.includes(tag.name)) {
-      included = true;
-    }
-  });
-  return included;
-}
-
 /* HTML BUTTON FUNCTIONS */
 
 function resetTagStyle(tag) {
@@ -292,7 +290,7 @@ function createTagButton(tag) {
   let button = document.createElement("button");
   let span = document.createElement("span");
   span.className = "tag-span";
-  if (tagIncludedInGame(tag)) {
+  if (tag.gamesWithTag !== 0) {
     span.textContent = " (" + tag.gamesWithTag + ")";
     button.textContent = tag.name;
     button.className = TAG_CLASS_NAMES;
@@ -324,14 +322,9 @@ function createGameButton(game) {
   let gameTagSpan = document.createElement("span");
   gameTagSpan.className = "game-tag-span";
   let tags = "Tags: ";
-  // gameTagSpan.textContent = tags;
   for (let i = 0; i < game.tags.length; i++) {
-    // let span = document.createElement("span");
-    // span.className = "game-tag";
-    // span.textContent = game.tags[i];
-    // gameTagSpan.appendChild(span);
     if (game.tags[i] === "All Games") { continue; }
-    if (i === game.tags.length - 1) {
+    if (i === game.tags.length - 2) {
       tags += game.tags[i];
     } else {
       tags += game.tags[i] + ", ";
@@ -372,6 +365,9 @@ function gameHasTagsIncluded(game) {
   tagsIncluded.forEach(function(tag){
     if (!game.tags.includes(tag.name)) {
       hasTag = false;
+    }
+    if (game.recentlyAdded && tag.name === "Recently Added") {
+      hasTag = true;
     }
   });
   return hasTag;

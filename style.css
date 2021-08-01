@@ -112,6 +112,44 @@ footer {
 
 .game-btn { margin: 10px; }
 
+.game-span, .game-title-span, .game-tag-container, .game-tag { 
+  opacity: 1; 
+}
+
+.game-span {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.game-title-span { 
+  font-size: 1.5em; 
+  font-weight: 600;
+}
+
+.game-developer-span { padding-left: 8px; }
+
+.game-tag-container {
+  display: flex;
+  justify-content: center;
+}
+
+.game-tag {
+  background-color: #ffffff;
+  color: #181818;
+  border: solid 1px #ffffff;
+  border-radius: 7px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin: 4px;
+  font-weight: 600;
+  font-size: 0.83em;
+  transition-duration: 0.1s;
+}
+
 .game-anchor { 
   cursor: default;
   margin: 0; 

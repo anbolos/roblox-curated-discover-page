@@ -317,20 +317,47 @@ function createGameButton(game) {
 
   let gameSpan = document.createElement("span");
   gameSpan.className = "game-span";
-  gameSpan.textContent = game.title + " by " + game.developer;
+
+  let gameTitleSpan = document.createElement("span");
+  gameTitleSpan.className = "game-title-span";
+
+  let gameDeveloperSpan = document.createElement("span");
+  gameDeveloperSpan.className = "game-developer-span";
+
+  gameTitleSpan.textContent = game.title; 
+  gameDeveloperSpan.textContent = "by " + game.developer;
+
+  gameSpan.appendChild(gameTitleSpan);
+  gameSpan.appendChild(gameDeveloperSpan);
 
   let gameTagSpan = document.createElement("span");
-  gameTagSpan.className = "game-tag-span";
-  let tags = "Tags: ";
+  gameTagSpan.className = "game-tag-container";
   for (let i = 0; i < game.tags.length; i++) {
+    let span = document.createElement("span");
     if (game.tags[i] === "All Games") { continue; }
-    if (i === game.tags.length - 2) {
-      tags += game.tags[i];
-    } else {
-      tags += game.tags[i] + ", ";
-    }
+    span.className = "game-tag";
+    span.textContent = game.tags[i];
+    gameTagSpan.appendChild(span);
   }
-  gameTagSpan.textContent = tags;
+
+  button.onmouseover = function(){
+    let gameTags = Array.from(gameTagSpan.children);
+    for (let i = 0; i < gameTags.length; i++) {
+      gameTags[i].style.backgroundColor = "#181818";
+      gameTags[i].style.color = "#ffffff";
+      gameTags[i].style.borderColor = "#ffffff";
+      gameTags[i].style.fontWeight = "200";
+    }
+  };
+  button.onmouseout = function(){
+    let gameTags = Array.from(gameTagSpan.children);
+    for (let i = 0; i < gameTags.length; i++) {
+      gameTags[i].style.backgroundColor = "#ffffff";
+      gameTags[i].style.color = "#181818";
+      gameTags[i].style.borderColor = "#ffffff";
+      gameTags[i].style.fontWeight = "600";
+    }
+  };
 
   a.appendChild(button);
   button.appendChild(gameSpan)
